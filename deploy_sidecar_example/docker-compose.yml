@@ -1,0 +1,26 @@
+version: '2'
+services:
+  sidecar-backup-mongo:
+      image: beeckup/sidecar-backup-mongo:latest
+      volumes:
+          - ./dumpdb:/go/src/app/dumpdb
+      restart: always
+      environment:
+        - MONGO_URI=${MONGO_URI}
+        - MONGO_FILENAME=${MONGO_FILENAME}
+        - SCHEDULE=${SCHEDULE}
+        - S3_UPLOAD=${S3_UPLOAD}
+        - S3_BUCKET=${S3_BUCKET}
+        - S3_BUCKET_FOLDER=${S3_BUCKET_FOLDER}
+        - S3_KEY=${S3_KEY}
+        - S3_SECRET=${S3_SECRET}
+        - S3_PROTOCOL=${S3_PROTOCOL}
+        - ZIP_FILE=${ZIP_FILE}
+        - CLEAN_DAYS=${CLEAN_DAYS}
+##################
+##### example db
+  mongo:
+      image: mongo:latest
+      restart: always
+      ports:
+        - 27017:27017
